@@ -12,9 +12,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: ${{ secrets.USER }}
-          POSTGRES_PASSWORD: ${{ secrets.PASSWORD }}
-          POSTGRES_DB: ${{ secrets.DATABASE }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: pdsi2
         ports:
           - 5432:5432
 
