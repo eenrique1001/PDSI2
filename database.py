@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 import os
 
 load_dotenv()
@@ -11,6 +11,8 @@ database = os.getenv("DATABASE")
 host = os.getenv("HOST")
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}/{database}"
+
+print("Using DB URL:", SQLALCHEMY_DATABASE_URL)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
