@@ -12,9 +12,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: secrets.USER
-          POSTGRES_PASSWORD: secrets.PASSWORD
-          POSTGRES_DB: secrets.DATABASE
+          POSTGRES_USER: ${{ secrets.USER }}
+          POSTGRES_PASSWORD: ${{ secrets.PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DATABASE }}
         ports:
           - 5432:5432
 
@@ -43,9 +43,9 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Esperando o PostgreSQL ficar pronto
-        run: sleep 15
+        run: sleep 20
 
       - name: Executar pytest
         env:
-          DATABASE_URL: postgresql://postgres:admin@localhost:5432/pdsi2
+          DATABASE_URL: postgresql://${{ secrets.USER }}:${{ secrets.PASSWORD }}@localhost:5432/${{ secrets.DATABASE }}
         run: pytest teste.py
