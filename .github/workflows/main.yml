@@ -27,15 +27,6 @@ jobs:
         with:
           python-version: "3.13.2"
 
-      - name: criar dotenv
-        run: |
-          touch .env
-          echo USER = ${{ secrets.USER }} >> .env
-          echo PASSWORD = ${{ secrets.PASSWORD }} >> .env
-          echo DATABASE = ${{ secrets.DATABASE }} >> .env
-          echo HOST =  "localhost" >> .env
-          cat .env
-
       - name: update pip
         run: python -m pip install --upgrade pip
 
