@@ -12,9 +12,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: admin
-          POSTGRES_DB: pdsi2
+          POSTGRES_USER: secrets.USER
+          POSTGRES_PASSWORD: secrets.PASSWORD
+          POSTGRES_DB: secrets.DATABASE
         ports:
           - 5432:5432
 
@@ -26,6 +26,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.13.2"
+
+      - name: criar dotenv
+        run: |
+          touch .env
+          echo USER = ${{ secrets.USER }} > .env
+          echo PASSWORD = ${{ secrets.PASSWORD }} > .env
+          echo DATABASE = ${{ secrets.DATABASE }} > .env
+          echo HOST =  "localhost" > .env
+          cat .env
 
       - name: update pip
         run: python -m pip install --upgrade pip
