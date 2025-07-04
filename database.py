@@ -10,7 +10,8 @@ password = os.getenv("PASSWORD")
 database = os.getenv("DATABASE")
 host = os.getenv("HOST")
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}/{database}"
+#SQLALCHEMY_DATABASE_URL = f"postgresql://{user}:{password}@{host}/{database}"
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
 print("Using DB URL:", SQLALCHEMY_DATABASE_URL)
 
