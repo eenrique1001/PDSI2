@@ -7,10 +7,24 @@ from database import engine, get_db
 from sqlalchemy.orm import Session
 import requests
 from bs4 import BeautifulSoup
+from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 
 model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = [
+    'http://localhost:3000'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 @app.get("/")
 def read_root():
@@ -35,7 +49,7 @@ def square(num: int):
     return num ** 2
 
 
-@app.get("/armazenarLinks", status_code=status.HTTP_201_CREATED)
+@app.get("/armazenarLinks", status_code=status.HTTP_200_OK)
 def enviarLinks(db: Session = Depends(get_db)):
 
     try:
@@ -74,3 +88,8 @@ def enviarLinks(db: Session = Depends(get_db)):
             db.refresh(link)
         db.commit()
     return {"msg": "links criados com sucesso"}
+
+@app.get("/mensagens", response_model=List[classes.Mensagem], status_code=status.HTTP_200_OK)
+async def buscar_valores(db: Session = Depends(get_db), skip: int = 0, limit: int=100):
+    mensagens = db.query(model.Model_Mensagem).offset(skip).limit(limit).all()
+    return mensagens
