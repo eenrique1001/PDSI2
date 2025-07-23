@@ -61,7 +61,7 @@ def enviarLinks(db: Session = Depends(get_db)):
     
     if(resposta.status_code == 200): 
         soup = BeautifulSoup(resposta.content, 'html.parser') 
-        print(soup.prettify())
+        #print(soup.prettify())
         barra_esquerda = soup.find('ul', class_='sidebar-nav nav-level-0')
         linhas_barra_esquerda = barra_esquerda.find_all('li', class_='nav-item')
         iniciar_captura = False
@@ -75,17 +75,17 @@ def enviarLinks(db: Session = Depends(get_db)):
                 combined.append((li.text.strip(), "https://ufu.br"+li.a.get('href')))
                 #linhas_desejadas_barra_esquerda.append(li.text.strip())
                 #links_barra_esquerda.append("https://ufu.br"+li.a.get('href'))
-
-        print(linhas_desejadas_barra_esquerda)
-        print(links_barra_esquerda)
-    
+        print("CAIU2")
+        #print(linhas_desejadas_barra_esquerda)
+        #print(links_barra_esquerda)
+        print(combined)
         #rows = [model.Model_Links(menuNAV=t[0], link=t[1]) for t in combined]
         #db.add_all()
 
         for a, b in combined:
             link = model.Model_Links(menuNAV=a, link=b)
             db.add(link)
-            db.refresh(link)
+            #db.refresh(link)
         db.commit()
     return {"msg": "links criados com sucesso"}
 
